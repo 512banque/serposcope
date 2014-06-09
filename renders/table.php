@@ -70,8 +70,25 @@ function render($ranks, $target, $keywords){
     }
     echo "</tr>";
     
+    // begin 512banque add
+    // in order to add the direct link to the SERP
+    $g_options = json_decode($group['options']);
+    // it would be better to fix this and rewrite a canonical function "retrieve domain" in modules/Google/module.php
+    if(!empty($g_options->datacenter)){
+            $domain = $g_options->datacenter;
+        }else if(!empty($g_options->tld)){
+            $domain = "www.google.".$g_options->tld;
+        }else {
+            $domain = "www.google.com";
+        }
+
     foreach ($keywords as $keyword) {
-        echo "<tr><td>".h8($keyword)."</td>";
+
+        $url = "https://$domain/search?q=".urlencode($keyword);
+        if(!empty($g_options->parameters)) $url .= "&".$g_options->parameters;
+        $url .= "&pws=0";
+        // end 512banque add
+        
         
         $prev="";
         foreach ($ranks as $id => $check) {
