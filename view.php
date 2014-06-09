@@ -339,7 +339,7 @@ foreach ($sites as $idSite => $site) {
         </form>
     </div>
     <?php
-    render($rank, $site, $keywords);
+    render($rank, $site, $keywords, $group);
     echo "</div>\n";
 }
 
